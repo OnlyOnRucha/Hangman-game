@@ -12,9 +12,9 @@
 //------------------------------------------functions prototypes---------------------------------------
 void hangmanTitle();
 void titleTwo();
-void wordArrays();
+void wordArrays(int);
 //void loading();
-void play();
+void level();
 
 //----------------------------------------------main---------------------------------------------------
 //----------------------------------------------main---------------------------------------------------
@@ -28,7 +28,7 @@ int main(){
 
     printf("\n\n\n                                    Welcome to HANGMAN game!!");
     start:
-    printf("\n\n\n                                          1.INTRODUCTION\n                                            2.PLAY\n                                            3.MORE\n                                            4.QUIT\n");
+    printf("\n\n\n                                        1.INTRODUCTION\n                                            2.PLAY\n                                            3.MORE\n                                            4.QUIT\n");
     printf("\n                                      Enter your choice:");
     scanf("%d", &choice);
 
@@ -47,7 +47,7 @@ int main(){
 
         case 2: 
                 titleTwo();
-                play();
+                level();
                 break;
 
         case 3:
@@ -56,6 +56,7 @@ int main(){
                 break;
 
         default: printf("Invalid Input. Choose 1 / 2 / 3 / 4.");   
+                 goto start;
                  break; 
         }
     }
@@ -100,7 +101,7 @@ void hangmanTitle()
 
 }
 
-void wordArrays(){
+void wordArrays(int c){
 
     char easy[MAX_ROWS][MAX_LENGTH] = {"css", "php", "mysql", "oracle", "linux", "java", "csharp", "html", "web"};
     
@@ -109,16 +110,42 @@ void wordArrays(){
     char hard[MAX_ROWS][MAX_LENGTH] = {"programming", "algorithm", "application", "database", "security", "encryption", "javascript"};
 
     srand(time(NULL));
-    int rand_row = rand() % MAX_ROWS;
 
-    printf("Random word: %s\n", easy[rand_row]);
+    int rand_row_easy = rand() % MAX_ROWS;
+    int rand_row_medium = rand() % MAX_ROWS;
+    int rand_row_hard = rand() % MAX_ROWS;
+
+
+    switch(c)
+    {
+        case 1: 
+                printf("Random word: %s\n", easy[rand_row_easy]);
+                break;
+
+        case 2:     
+                printf("Random word: %s\n", medium[rand_row_medium]);
+                break;
+
+        case 3:     
+                printf("Random word: %s\n", hard[rand_row_hard]);
+                break;
+                
+    }
+    
 
 }
 
-void play(){
+void level(){
         int choice;
-        printf("\n\n\n                                    Choose difficulty level:\n                                    1.Easy\n                                    2.Medium\n                                    3.Hard\n");
+        chooselevel:
+        printf("\n\n\n                                    Choose difficulty level:\n                                            1.Easy\n                                           2.Medium\n                                            3.Hard\n");
+        printf("\n                                      Enter your choice:");
         scanf("%d", &choice);
+        if (choice>3){
+            printf("Enter valid input.");
+            goto chooselevel;
+        }else
+        wordArrays(choice);
         
 }
 
