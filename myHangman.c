@@ -3,6 +3,9 @@
 #include <time.h>
 #include <conio.h>
 
+#define MAX_ROWS 20
+#define MAX_LENGTH 18
+
 //------------------------------------------functions prototypes---------------------------------------
 //------------------------------------------functions prototypes---------------------------------------
 //------------------------------------------functions prototypes---------------------------------------
@@ -99,7 +102,16 @@ void hangmanTitle()
 
 void wordArrays(){
 
+    char easy[MAX_ROWS][MAX_LENGTH] = {"css", "php", "mysql", "oracle", "linux", "java", "csharp", "html", "web"};
     
+    char medium[MAX_ROWS][MAX_LENGTH] = {"python", "database", "network", "computer", "software"};
+
+    char hard[MAX_ROWS][MAX_LENGTH] = {"programming", "algorithm", "application", "database", "security", "encryption", "javascript"};
+
+    srand(time(NULL));
+    int rand_row = rand() % MAX_ROWS;
+
+    printf("Random word: %s\n", easy[rand_row]);
 
 }
 
@@ -107,6 +119,7 @@ void play(){
         int choice;
         printf("\n\n\n                                    Choose difficulty level:\n                                    1.Easy\n                                    2.Medium\n                                    3.Hard\n");
         scanf("%d", &choice);
+        
 }
 
 void titleTwo(){
