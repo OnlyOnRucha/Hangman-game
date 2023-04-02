@@ -8,8 +8,10 @@
 //------------------------------------------functions prototypes---------------------------------------
 //------------------------------------------functions prototypes---------------------------------------
 void hangmanTitle();
+void titleTwo();
 void wordArrays();
 //void loading();
+void play();
 
 //----------------------------------------------main---------------------------------------------------
 //----------------------------------------------main---------------------------------------------------
@@ -41,7 +43,8 @@ int main(){
                 break;
 
         case 2: 
-
+                titleTwo();
+                play();
                 break;
 
         case 3:
@@ -96,9 +99,28 @@ void hangmanTitle()
 
 void wordArrays(){
 
+    
+
 }
 
+void play(){
+        int choice;
+        printf("\n\n\n                                    Choose difficulty level:\n                                    1.Easy\n                                    2.Medium\n                                    3.Hard\n");
+        scanf("%d", &choice);
+}
 
+void titleTwo(){
+
+                                                                                                
+    printf("\n                                              ('u')                                  ");   
+    printf("\n                                              __|__                                  "); 
+    printf("\n                                               /_\\                                  ");
+    printf("\n                                               | |                                   ");
+    printf("\n                                    Will you please save me<3                        ");
+    printf("\n                                                                                     ");
+    
+
+}
 /*
 void loading(){
 
