@@ -3,10 +3,17 @@
 #include <time.h>
 #include <conio.h>
 #include <unistd.h>
+#include <string.h>
 
 #define MAX_ROWS 20
 #define MAX_LENGTH 18
 #define MAX_TRIES 10
+
+    char easy[MAX_ROWS][MAX_LENGTH] = {"css", "php", "mysql", "oracle", "linux", "java", "csharp", "html", "web"};
+    
+    char medium[MAX_ROWS][MAX_LENGTH] = {"python", "database", "network", "computer", "software"};
+
+    char hard[MAX_ROWS][MAX_LENGTH] = {"programming", "algorithm", "application", "database", "security", "encryption", "javascript"};
 
 
 //------------------------------------------functions prototypes---------------------------------------
@@ -15,7 +22,7 @@
 //------------------------------------------functions prototypes---------------------------------------
 void hangmanTitle();
 void titleTwo();
-void wordArrays(int);
+//void wordsArray(int);
 int loading();
 void level();
 
@@ -26,6 +33,25 @@ void level();
 int main(){
 
     int choice;
+
+    srand(time(NULL));
+
+    int index_rand_row_easy = rand() % MAX_ROWS;        //geting a random index
+    int index_rand_row_medium = rand() % MAX_ROWS;
+    int index_rand_row_hard = rand() % MAX_ROWS;
+
+    char * random_word_easy = easy[index_rand_row_easy];     //geting a random word
+    char * random_word_medium = medium[index_rand_row_medium];
+    char * random_word_hard = hard[index_rand_row_hard];
+
+    int length_easy = strlen(random_word_easy);
+    int length_medium = strlen(random_word_medium);;
+    int length_hard = strlen(random_word_hard);;
+
+
+    char * guess_easy = malloc(length_easy * sizeof(char));
+    char * guess_medium = malloc(length_medium * sizeof(char));
+    char * guess_hard = malloc(length_hard * sizeof(char));
 
     hangmanTitle();
 
@@ -68,6 +94,7 @@ start:
         }
     }
 
+  
 
     return 0;
 }
@@ -77,6 +104,8 @@ start:
 //------------------------------------------functions--------------------------------------------------
 //------------------------------------------functions--------------------------------------------------
 //------------------------------------------functions--------------------------------------------------
+
+//11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 
 void hangmanTitle()
 {
@@ -108,39 +137,28 @@ void hangmanTitle()
 
 }
 
-void wordArrays(int c){
+//22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
 
-    char easy[MAX_ROWS][MAX_LENGTH] = {"css", "php", "mysql", "oracle", "linux", "java", "csharp", "html", "web"};
-    
-    char medium[MAX_ROWS][MAX_LENGTH] = {"python", "database", "network", "computer", "software"};
-
-    char hard[MAX_ROWS][MAX_LENGTH] = {"programming", "algorithm", "application", "database", "security", "encryption", "javascript"};
-
-    srand(time(NULL));
-
-    int rand_row_easy = rand() % MAX_ROWS;
-    int rand_row_medium = rand() % MAX_ROWS;
-    int rand_row_hard = rand() % MAX_ROWS;
-
-
+//void wordsArray(int c){
+/*
     switch(c)
     {
         case 1: 
-                printf("Random word: %s\n", easy[rand_row_easy]);
+                printf("Random word: %s\n", easy[index_rand_row_easy]);
                 break;
 
         case 2:     
-                printf("Random word: %s\n", medium[rand_row_medium]);
+                printf("Random word: %s\n", medium[index_rand_row_medium]);
                 break;
 
         case 3:     
-                printf("Random word: %s\n", hard[rand_row_hard]);
+                printf("Random word: %s\n", hard[index_rand_row_hard]);
                 break;
-                
     }
-    
+*/   
+//}
 
-}
+//33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
 
 void level(){
         int choice;
@@ -151,10 +169,12 @@ void level(){
         if (choice>3){
             printf("Enter valid input.");
             goto chooselevel;
-        }else
-        wordArrays(choice);
-        
+        }
+        //else
+        //wordArrays(choice);
 }
+
+//4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
 
 void titleTwo(){
 
@@ -169,6 +189,8 @@ void titleTwo(){
 
 }
 
+//5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
+
 int loading(){
 
     printf("\n\n                                          Loading ");
@@ -178,21 +200,4 @@ int loading(){
 
                 }   
         return 0; 
-}                           
-/*
-    printf("\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t LOADING ");
-      delay(500);
-      printf("..");
-
-      delay(500);
-      printf("..");
-
-      delay(500);
-      printf("..");
-
-      delay(500);
-      printf("...");
-
-     //goto start;
-     */
-
+}                            
