@@ -1,10 +1,13 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include <unistd.h>
 
 #define MAX_ROWS 20
 #define MAX_LENGTH 18
+#define MAX_TRIES 10
+
 
 //------------------------------------------functions prototypes---------------------------------------
 //------------------------------------------functions prototypes---------------------------------------
@@ -13,7 +16,7 @@
 void hangmanTitle();
 void titleTwo();
 void wordArrays(int);
-//void loading();
+int loading();
 void level();
 
 //----------------------------------------------main---------------------------------------------------
@@ -27,7 +30,8 @@ int main(){
     hangmanTitle();
 
     printf("\n\n\n                                    Welcome to HANGMAN game!!");
-    start:
+   
+start:
     printf("\n\n\n                                        1.INTRODUCTION\n                                            2.PLAY\n                                            3.MORE\n                                            4.QUIT\n");
     printf("\n                                      Enter your choice:");
     scanf("%d", &choice);
@@ -40,12 +44,15 @@ int main(){
         switch (choice)
         {
         case 1: 
-                printf("\n\n\n                                          1.INTRODUCTION\n");
+                printf("\n\n\n                                        1.INTRODUCTION\n");
                 printf("\n     Hangman is a word guessing game in which you try to guess the secret word one letter at a time. \nFor each incorrect guess, a part of a hangman is drawn. You have a limited number of chances to guess \nthe word before you lose the game. All of the words included in this game are computer related.\nGood Luck!!");
+                sleep(1);
+                loading();
                 goto start;
                 break;
 
         case 2: 
+                loading();
                 titleTwo();
                 level();
                 break;
@@ -161,9 +168,18 @@ void titleTwo(){
     
 
 }
-/*
-void loading(){
 
+int loading(){
+
+    printf("\n\n                                          Loading ");
+                for (int i = 0; i < 3; i++) {
+                    printf(". ");
+                sleep(1);
+
+                }   
+        return 0; 
+}                           
+/*
     printf("\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t LOADING ");
       delay(500);
       printf("..");
@@ -178,5 +194,5 @@ void loading(){
       printf("...");
 
      //goto start;
-}
-*/
+     */
+
