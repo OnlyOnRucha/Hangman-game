@@ -4,6 +4,7 @@
 #include <conio.h>
 #include <unistd.h>
 #include <string.h>
+#include <ctype.h>
 
 
 //11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
@@ -96,3 +97,8 @@ void difficultyLevel(){
         printf("\n\n\n                                    Choose difficulty level:\n                                            1.Easy\n                                           2.Medium\n                                            3.Hard\n");
         printf("\n                                      Enter your choice:");
 }      
+
+//9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+void printHangman(){
+    
+}
