@@ -1,46 +1,42 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <conio.h>
-#include <unistd.h>
-#include <string.h>
+#include "saveman.h"
 
 #define MAX_ROWS 20
 #define MAX_LENGTH 18
 #define MAX_TRIES 10
 
-    char easy[MAX_ROWS][MAX_LENGTH] = {"css", "php", "mysql", "oracle", "linux", "java", "csharp", "html", "web"};
+char easy[MAX_ROWS][MAX_LENGTH] = {"css", "php", "mysql", "oracle", "linux", "java", "csharp", "html", "web"};
     
-    char medium[MAX_ROWS][MAX_LENGTH] = {"python", "database", "network", "computer", "software"};
+char medium[MAX_ROWS][MAX_LENGTH] = {"python", "database", "network", "computer", "software"};
 
-    char hard[MAX_ROWS][MAX_LENGTH] = {"programming", "algorithm", "application", "database", "security", "encryption", "javascript"};
+char hard[MAX_ROWS][MAX_LENGTH] = {"programming", "algorithm", "application", "database", "security", "encryption", "javascript"};
 
 
-//------------------------------------------functions prototypes---------------------------------------
-//------------------------------------------functions prototypes---------------------------------------
-//------------------------------------------functions prototypes---------------------------------------
 //------------------------------------------functions prototypes---------------------------------------
 void hangmanTitle();
 void titleTwo();
-//void wordsArray(int);
 int loading();
-void level();
+int level();
+void printWord(char *, int);
+void play_easy();
+void play_medium();
+void play_hard();
 
-//----------------------------------------------main---------------------------------------------------
-//----------------------------------------------main---------------------------------------------------
-//----------------------------------------------main---------------------------------------------------
 //----------------------------------------------main---------------------------------------------------
 int main(){
 
     int choice;
+    int choice_level = 0;
+    int num_guesses = 0;
+    int num_wrong = 0;
+    char letter;
 
     srand(time(NULL));
 
-    int index_rand_row_easy = rand() % MAX_ROWS;        //geting a random index
+    int index_rand_row_easy = rand() % MAX_ROWS;                //geting a random index
     int index_rand_row_medium = rand() % MAX_ROWS;
     int index_rand_row_hard = rand() % MAX_ROWS;
 
-    char * random_word_easy = easy[index_rand_row_easy];     //geting a random word
+    char * random_word_easy = easy[index_rand_row_easy];        //geting a random word
     char * random_word_medium = medium[index_rand_row_medium];
     char * random_word_hard = hard[index_rand_row_hard];
 
@@ -49,18 +45,30 @@ int main(){
     int length_hard = strlen(random_word_hard);;
 
 
-    char * guess_easy = malloc(length_easy * sizeof(char));
+    char * guess_easy = malloc(length_easy * sizeof(char));    // definitin of guess array
+        for (int i = 0; i < length_easy; i++) {               // initializes each element of the guess
+            guess_easy[i] = '_';                             // array to an underscore character
+        }
+
     char * guess_medium = malloc(length_medium * sizeof(char));
+        for (int j = 0; j < length_medium; j++){
+            guess_medium[j] = '_';
+        }
+
     char * guess_hard = malloc(length_hard * sizeof(char));
+        for (int k = 0; k < length_medium; k++){
+            guess_medium[k] = '_';
+        }
+    
+    char *guesses = malloc(MAX_TRIES * sizeof(char));
+
 
     hangmanTitle();
-
-    printf("\n\n\n                                    Welcome to HANGMAN game!!");
+    welcome();
    
 start:
-    printf("\n\n\n                                        1.INTRODUCTION\n                                            2.PLAY\n                                            3.MORE\n                                            4.QUIT\n");
-    printf("\n                                      Enter your choice:");
-    scanf("%d", &choice);
+    beginning(); 
+    scanf("%d", &choice); //choice is asked in the beginning() function call.
 
 
     if (choice==4)
@@ -70,8 +78,7 @@ start:
         switch (choice)
         {
         case 1: 
-                printf("\n\n\n                                        1.INTRODUCTION\n");
-                printf("\n     Hangman is a word guessing game in which you try to guess the secret word one letter at a time. \nFor each incorrect guess, a part of a hangman is drawn. You have a limited number of chances to guess \nthe word before you lose the game. All of the words included in this game are computer related.\nGood Luck!!");
+                intro();
                 sleep(1);
                 loading();
                 goto start;
@@ -80,11 +87,23 @@ start:
         case 2: 
                 loading();
                 titleTwo();
-                level();
+                choice_level = level();
+                
+                    if (choice_level == 1){
+                        printWord(guess_easy, length_easy);
+                        printf("\nenter");
+                        scanf("%c", &letter);
+                        printf("\n%c", letter);
+
+                    } else if (choice_level == 2){
+                        printWord(guess_medium, length_medium);
+                    } else if (choice_level == 3){
+                        printWord(guess_hard, length_hard);
+                    } else printf("\nInvalid Input.");
                 break;
 
         case 3:
-                printf("Date of creaion: 02/04/2023\nCreator: Rucha Paranjape");  
+                more();  
                 goto start;                     
                 break;
 
@@ -94,110 +113,40 @@ start:
         }
     }
 
-  
-
     return 0;
 }
 
-
-//------------------------------------------functions--------------------------------------------------
-//------------------------------------------functions--------------------------------------------------
-//------------------------------------------functions--------------------------------------------------
 //------------------------------------------functions--------------------------------------------------
 
 //11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 
-void hangmanTitle()
-{
-
-    printf("\n                                                                                      ");
-    printf("\n                _______________________________________________________________       ");
-    printf("\n               |  ___________________________________________________________  |      ");
-    printf("\n               | |                                                           | |      ");
-    printf("\n               | |    0    0   000   0   0   0000   0    0   000   0   0     | |      ");
-    printf("\n               | |    0    0  0   0  00  0  0       00  00  0   0  00  0     | |      ");
-    printf("\n               | |    000000  00000  0 0 0  0  000  0 00 0  00000  0 0 0     | |      ");
-    printf("\n               | |    0    0  0   0  0  00  0    0  0    0  0   0  0  00     | |      ");
-    printf("\n               | |    0    0  0   0  0   0   0000   0    0  0   0  0   0     | |      ");
-    printf("\n               | |___________________________________________________________| |      ");
-    printf("\n               |_______________________________________________________________|      ");
-    printf("\n                                                                                      ");
-    printf("\n                                                                                      ");
-                                                                                      
-
-
-                                                                                               
-    printf("\n                                              ('u')                                  ");   
-    printf("\n                                              __|__                                  "); 
-    printf("\n                                               /_\\                                  ");
-    printf("\n                                               | |                                   ");
-    printf("\n                                    Will you please save me<3                        ");
-    printf("\n                                                                                     ");
-    
-
-}
-
-//22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
-
-//void wordsArray(int c){
-/*
-    switch(c)
-    {
-        case 1: 
-                printf("Random word: %s\n", easy[index_rand_row_easy]);
-                break;
-
-        case 2:     
-                printf("Random word: %s\n", medium[index_rand_row_medium]);
-                break;
-
-        case 3:     
-                printf("Random word: %s\n", hard[index_rand_row_hard]);
-                break;
-    }
-*/   
-//}
-
-//33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
-
-void level(){
+int level(){
         int choice;
-        chooselevel:
-        printf("\n\n\n                                    Choose difficulty level:\n                                            1.Easy\n                                           2.Medium\n                                            3.Hard\n");
-        printf("\n                                      Enter your choice:");
-        scanf("%d", &choice);
+    chooselevel:
+        difficultyLevel();
+        scanf("%d", &choice);  //choice is asked in difficultyLevel() function call
         if (choice>3){
             printf("Enter valid input.");
             goto chooselevel;
         }
-        //else
-        //wordArrays(choice);
+        else
+            return(choice);
 }
 
-//4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
 
-void titleTwo(){
+//22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
 
-                                                                                                
-    printf("\n                                              ('u')                                  ");   
-    printf("\n                                              __|__                                  "); 
-    printf("\n                                               /_\\                                  ");
-    printf("\n                                               | |                                   ");
-    printf("\n                                    Will you please save me<3                        ");
-    printf("\n                                                                                     ");
+void printWord(char *guess_arr, int length) {     //IT'S RECEIVING guess AND length AS PARAMETERS TO PRINT _ _ _ _
     
-
+    printf("\nThe word has %d letters\nGuess the word->\n", length);
+    
+    for (int x = 0; x < length; x++) {
+        printf("%c ", guess_arr[x]);             //NOTICE THE SPACE AFTER %c TO PRINT _ _ _ _ _
+     }
+    printf("\n");
 }
 
+//3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
+//4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
 //5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
-
-int loading(){
-
-    printf("\n\n                                          Loading ");
-                for (int i = 0; i < 3; i++) {
-                    printf(". ");
-                sleep(1);
-
-                }   
-        return 0; 
-}                            
+//6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
