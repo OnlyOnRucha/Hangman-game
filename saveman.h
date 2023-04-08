@@ -89,7 +89,7 @@ void intro(){
 
 //7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
 void more(){
-    printf("Date of creaion: 02/04/2023\nCreator: Rucha Paranjape");
+    printf("\nDate of creaion: 02/04/2023\nCreator: Rucha Paranjape");
 }
 
 //8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
@@ -99,6 +99,30 @@ void difficultyLevel(){
 }      
 
 //9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-void printHangman(){
+void printHangman(int numWrong){
+    printf("\n");
+    printf("\n");
+    printf(" _______________\n");
+    printf(" |/            %c\n", numWrong>=1 ? '|' : ' ' );
+    printf(" |           %s\n", numWrong>=2 ? "('u')" : "(x-x)");
+    printf(" |           %s%c%s\n", numWrong>=4 ? "__" : " ", numWrong>=3 ? '|' : ' ', numWrong>=5 ? "__" : " ");
+    printf(" |            %c%c%c\n", numWrong>=6 ? '/' : ' ', numWrong>=8 ? '_' : ' ', numWrong>=7 ? '\\' : ' ');
+    printf(" |            %c %c\n", numWrong>=9 ? '|' : ' ', numWrong>=10 ? '|' : ' ');
+    printf(" |\n");
+    printf("_|____________________________\n");
+    printf("   |_____|          |_____|   ");
+}
+
+//1111111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+
+//1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+int getInput()
+{
+    char letter;
+    scanf("%c", &letter);
+    getchar();
+    letter = tolower(letter);
+    return letter;
     
 }

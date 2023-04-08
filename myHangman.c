@@ -8,17 +8,21 @@ char easy[MAX_ROWS][MAX_LENGTH] = {"css", "php", "mysql", "oracle", "linux", "ja
 "web", "laptop", "api", "array", "ascii", "binary", "data", "coding", "oop", "ram", "input", "output"};
     
 char medium[MAX_ROWS][MAX_LENGTH] = {"python", "database", "network", "computer", "software", 
-"harddisk", "compiler", "boolean", "malware", "chatgpt"};
+"harddisk", "compiler", "boolean", "malware", "chatgpt", "google", "operators", "memory", "github", 
+"assembly", "statistics", "virus", "technology", "internet", "server"};
 
-char hard[MAX_ROWS][MAX_LENGTH] = {"programming", "algorithm", "application", "database", "security", "encryption", "javascript"};
+char hard[MAX_ROWS][MAX_LENGTH] = {"programming", "algorithm", "application", "database", "security", 
+"encryption", "javascript", "operating system", "computer networks", "machine learning", "logic gates", 
+"command prompt", "version control", "time complexity", "software testing", "web developement", 
+"ethical hacking", "data science", "wireless", "website"};
 
 
 //------------------------------------------functions prototypes---------------------------------------
 int level();
 void printWord(char *, int);
-int getInput();
-void found();
+void printGuesses();
 void winLose(char *);
+void playNow(char *, int, char *);
 
 //-----------------------------------global variables----------------------------------------------
     int index_rand_row_easy;
@@ -80,7 +84,7 @@ int main(){
 
     guess_hard = malloc(length_hard * sizeof(char));
         for (int k = 0; k < length_hard; k++){
-            guess_medium[k] = '_';
+            guess_hard[k] = '_';
         }
     
     guesses = malloc(MAX_TRIES * sizeof(char));
@@ -109,22 +113,23 @@ start:
                 break;
 
         case 2: 
-            //loading();
+            loading();
+            printf("\n");
+            printf("\n");
             titleTwo();
             choice_level = level();
                 
             switch (choice_level){
                 case 1:
-                        found();
-                        winLose(random_word_easy);
+                        playNow(guess_easy, length_easy, random_word_easy);
                         break;
 
                 case 2:
-                        printWord(guess_medium, length_medium);
+                        playNow(guess_medium, length_medium, random_word_medium);
                         break;
 
                 case 3:
-                        printWord(guess_hard, length_hard);
+                        playNow(guess_hard, length_hard, random_word_hard);
                         break;
 
                 default:
@@ -135,6 +140,8 @@ start:
                 break;
 
         case 3:
+                sleep(1);
+                loading();
                 more();  
                 goto start;                     
                 break;
@@ -158,6 +165,7 @@ start:
 //11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 
 int level(){
+        loading();
         int choice;
     chooselevel:
         difficultyLevel();
@@ -181,54 +189,69 @@ void printWord(char *guess_arr, int length) {     //IT'S RECEIVING guess AND len
         printf("%c ", guess_arr[x]);             //NOTICE THE SPACE AFTER %c TO PRINT _ _ _ _ _
     }
     printf("\n");
-    printf("\nGuess the word->\n");
+    printf("\nGuess the word->");
 }
 
 //3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
-
-int getInput()
-{
-    char letter;
-    scanf("%c", &letter);
-    getchar();
-    letter = tolower(letter);
-    return letter;
-    
+void printGuesses(){
+    printf("\nPrevious guesses: ");
+    for (int v = 0; v < num_guesses; v++){
+        printf("%c ", guesses[v]);
+    }
+    printf("\n");
 }
+
 //4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
 
-void found(){
+void playNow(char *guess_play, int length_play, char * random_word_play){
     
-while(num_wrong < MAX_TRIES && strcmp(random_word_easy, guess_easy) != 0){
-    printWord(guess_easy, length_easy);
-    letter_input = getInput();
-    for(int y = 0; y<length_easy; y++){
-        if (random_word_easy[y] == letter_input){
-            guess_easy[y] = letter_input;
-            found_letter = 1;
+    printWord(guess_play, length_play);
+    printf("\n");
+    while(num_wrong < MAX_TRIES && strcmp(random_word_play, guess_play) != 0){
+        letter_input = getInput();
+        for(int y = 0; y < length_easy; y++) {
+            if (random_word_play[y] == letter_input){
+                guess_play[y] = letter_input;
+                found_letter = 1;
+            } else found_letter = 0;
         }
-    }
 
-    if(found_letter == 1){
-        printf("\nGood guess!!");
-    } else {
-        printf("\nThat letter is not in the word.\nTry again!");
-        num_wrong++;
-        printHangman();
+        if (found_letter) {
+            printf("\nGood guess!!");
+        } else {
+            printf("\nThat letter is not in the word.\nTry again!");
+            num_wrong++;
+            printHangman(num_wrong);
+        }
+        
+        guesses[num_guesses] = letter_input;
+        num_guesses++;
+
+        printGuesses();
+        printf("\n");
+
+        printWord(guess_play, length_play);
+        printf("\n");
     }
-    guesses[num_guesses] = letter_input;
-    num_guesses++;
+    winLose(random_word_play);
 }
     
-}
+
 //5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
 
 void winLose(char *word){
     if (num_wrong == MAX_TRIES) {
     printf("You lose!\n");
-    printf("The word was: %s\n", word);
+    printf("The word was: %s\n\n", word);
     } else {
-    printf("Congratulations! You win!\n");
+    printf("Congratulations! You win!\n\n");
     }
 }
 //6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666
+
+
+
+
+
+
+
