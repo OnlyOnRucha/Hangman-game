@@ -316,6 +316,9 @@ void playNow(char *guess_play, int length_play, char * random_word_play, char *e
 
         printWord(guess_play, length_play, explain);
         printf("\n");
+
+        if (random_word_play == guess_play) 
+            break;
     }
     winLose(random_word_play);
 }
@@ -336,15 +339,9 @@ void winLose(char *word){
 int getInput()
 {
     char letter;
-    scanf("%c", &letter);
+    scanf("%s", &letter);
     getchar();
     letter = tolower(letter);
     return letter;
     
 }
-
-
-
-
-
-
